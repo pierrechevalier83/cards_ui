@@ -1,5 +1,6 @@
-extern crate cards;
+extern crate cards_ui;
 
 fn main() {
-    cards::run();
+
+    cards_ui::run();
 }

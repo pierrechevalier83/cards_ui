@@ -1,5 +1,5 @@
 [package]
-name = "cards"
+name = "cards_ui"
 version = "0.1.0"
 authors = ["Pierre Chevalier <pierrechevalier83@gmail.com>"]
 
@@ -7,3 +7,5 @@ authors = ["Pierre Chevalier <pierrechevalier83@gmail.com>"]
 conrod = "0.37.*"
 find_folder = "*"
 piston_window = "*"
+[dependencies.cards]
+git = "https://github.com/th4t/cards-rs.git"
