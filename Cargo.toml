@@ -4,4 +4,6 @@ version = "0.1.0"
 authors = ["Pierre Chevalier <pierrechevalier83@gmail.com>"]
 
 [dependencies]
-cargo = "0.11.*"
+conrod = "0.37.*"
+find_folder = "*"
+piston_window = "*"
