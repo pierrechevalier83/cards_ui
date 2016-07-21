@@ -8,8 +8,9 @@ mod tests {
 
 #[macro_use]
 extern crate conrod;
-extern crate find_folder;
 extern crate piston_window;
+
+mod assets;
 
 pub fn run() {
     use conrod::{Canvas, Colorable, Image, Positionable, Theme, Widget, color};
@@ -32,24 +33,17 @@ pub fn run() {
         .build()
         .unwrap();
 
-    // Get the path to our `assets` directory (where the fonts and images are).
-    let assets = find_folder::Search::ParentsThenKids(3, 3).for_folder("assets").unwrap();
 
     // construct our `Ui`.
     let mut ui = {
-        let font_path = assets.join("fonts/NotoSans/NotoSans-Regular.ttf");
+        let font_path = assets::assets_folder().join("fonts/NotoSans/NotoSans-Regular.ttf");
         let theme = Theme::default();
         let glyph_cache = piston_window::Glyphs::new(&font_path, window.factory.clone()).unwrap();
         Ui::new(glyph_cache, theme)
     };
 
     // The texture to use for the `Image`.
-    let rust_logo = {
-        let path = assets.join("images/rust.png");
-        let factory = &mut window.factory;
-        let settings = piston_window::TextureSettings::new();
-        Arc::new(Texture::from_path(factory, &path, Flip::None, &settings).unwrap())
-    };
+    let rust_logo = assets::rust_logo(&mut window);
 
     window.set_ups(60);
 
