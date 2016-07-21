@@ -1,7 +1,7 @@
-Cards
-=====
+Cards UI
+========
 
-A card game library written in Rust using the Conrod UI framework.
+A card game UI library written in Rust.
 
 TODO
 ----
@@ -13,4 +13,6 @@ TODO
 
 Credits
 -------
-Card deck asset from Monika Ratan
+UI framework: Conrod from the great PistonDevelopers
+Simple cards abstraction: cards-rs from th4t
+Card deck: assets from Monika Ratan
