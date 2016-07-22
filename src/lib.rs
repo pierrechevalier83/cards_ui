@@ -4,32 +4,19 @@ mod tests {
     fn it_works() {}
 }
 
-// A simple demonstration of how to instantiate an `Image` widget.
-
 #[macro_use]
 extern crate conrod;
 extern crate piston_window;
 
 mod backend;
 mod assets;
+mod window;
 
 pub fn run() {
     use conrod::{Canvas, Colorable, Image, Positionable, Widget, color};
-    use piston_window::{EventLoop, PistonWindow, UpdateEvent, WindowSettings};
+    use piston_window::{EventLoop, UpdateEvent};
 
-    // Change this to OpenGL::V2_1 if not working.
-    let opengl = piston_window::OpenGL::V3_2;
-
-    // Construct the window.
-    let mut window: PistonWindow = WindowSettings::new("Image Widget Demonstration", [800, 600])
-        .opengl(opengl)
-        .exit_on_esc(true)
-        .vsync(true)
-        .samples(4)
-        .build()
-        .unwrap();
-
-
+    let mut window = window::setup("Image Widget Demonstration");
     let mut ui = assets::conrod_ui(&mut window);
     let rust_logo = assets::rust_logo(&mut window);
 
