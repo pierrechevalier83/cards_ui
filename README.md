@@ -1,4 +1,4 @@
-Cards UI
+Cards UI (WIP)
 ========
 
 A card game UI library written in Rust.
@@ -12,6 +12,6 @@ TODO
 
 Credits
 -------
-UI framework: Conrod from the great PistonDevelopers
-Simple cards abstraction: cards-rs from th4t
-Card deck: assets from Monika Ratan
+* UI framework: Conrod from the great PistonDevelopers
+* Simple cards abstraction: cards-rs from th4t
+* Card deck: assets from Monika Ratan
