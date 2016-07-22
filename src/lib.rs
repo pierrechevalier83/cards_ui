@@ -10,16 +10,12 @@ mod tests {
 extern crate conrod;
 extern crate piston_window;
 
+mod backend;
 mod assets;
 
 pub fn run() {
-    use conrod::{Canvas, Colorable, Image, Positionable, Theme, Widget, color};
-    use piston_window::{EventLoop, Flip, PistonWindow, Texture, UpdateEvent, WindowSettings};
-    use std::sync::Arc;
-
-    // Conrod is backend agnostic. Here, we define the `piston_window` backend to use for our `Ui`.
-    type Backend = (piston_window::G2dTexture<'static>, piston_window::Glyphs);
-    type Ui = conrod::Ui<Backend>;
+    use conrod::{Canvas, Colorable, Image, Positionable, Widget, color};
+    use piston_window::{EventLoop, PistonWindow, UpdateEvent, WindowSettings};
 
     // Change this to OpenGL::V2_1 if not working.
     let opengl = piston_window::OpenGL::V3_2;
@@ -34,15 +30,7 @@ pub fn run() {
         .unwrap();
 
 
-    // construct our `Ui`.
-    let mut ui = {
-        let font_path = assets::assets_folder().join("fonts/NotoSans/NotoSans-Regular.ttf");
-        let theme = Theme::default();
-        let glyph_cache = piston_window::Glyphs::new(&font_path, window.factory.clone()).unwrap();
-        Ui::new(glyph_cache, theme)
-    };
-
-    // The texture to use for the `Image`.
+    let mut ui = assets::conrod_ui(&mut window);
     let rust_logo = assets::rust_logo(&mut window);
 
     window.set_ups(60);
