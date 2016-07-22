@@ -16,12 +16,11 @@ pub fn run() {
     use conrod::{Canvas, Colorable, Image, Positionable, Widget, color};
     use piston_window::{EventLoop, UpdateEvent};
 
-    let mut window = window::setup("Image Widget Demonstration");
+    let mut window = window::setup("Hidden Card");
     let mut ui = assets::conrod_ui(&mut window);
-    let rust_logo = assets::rust_logo(&mut window);
+    let hidden_card = assets::hidden_card(&mut window);
 
     window.set_ups(60);
-
     // Poll events from the window.
     while let Some(event) = window.next() {
         ui.handle_event(event.clone());
@@ -30,7 +29,7 @@ pub fn run() {
             ui.set_widgets(|mut ui| {
                 widget_ids!(CANVAS, RUST_LOGO);
                 Canvas::new().color(color::LIGHT_BLUE).set(CANVAS, &mut ui);
-                Image::from_texture(rust_logo.clone())
+                Image::from_texture(hidden_card.clone())
                     .middle_of(CANVAS)
                     .set(RUST_LOGO, &mut ui);
             })

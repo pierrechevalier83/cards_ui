@@ -5,7 +5,6 @@ A card game UI library written in Rust.
 
 TODO
 ----
-* Show a card on reverse side
 * Flip card
 * Card picker
 * Layout (rows/columns)

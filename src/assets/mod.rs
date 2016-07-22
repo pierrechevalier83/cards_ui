@@ -13,6 +13,13 @@ pub fn rust_logo(window: &mut PistonWindow) -> Arc<G2dTexture<'static>> {
     Arc::new(Texture::from_path(factory, &path, Flip::None, &settings).unwrap())
 }
 
+pub fn hidden_card(window: &mut PistonWindow) -> Arc<G2dTexture<'static>> {
+    let path = assets_folder().join("images/card-deck/Back Covers/Emerald.png");
+    let factory = &mut window.factory;
+    let settings = TextureSettings::new();
+    Arc::new(Texture::from_path(factory, &path, Flip::None, &settings).unwrap())
+}
+
 use super::backend;
 pub fn conrod_ui(window: &mut PistonWindow) -> backend::Ui {
     let font_path = assets_folder().join("fonts/NotoSans/NotoSans-Regular.ttf");
