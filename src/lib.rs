@@ -46,13 +46,7 @@ fn set_widgets(ui: &mut backend::UiCell, app: &mut CardsApp, window: &mut Piston
     use conrod::*;//{Button, Canvas, Colorable, Image, Positionable, Widget, color};
     Canvas::new().color(color::LIGHT_BLUE).set(CANVAS, ui);
 
-    let card = app.last_card();
-    let texture = match card {
-        Some(card) => assets::card(window, card),
-        None => assets::hidden_card(window),
-    };
-
-    Image::from_texture(texture)
+    Image::from_texture(app.card_texture(window))
         .middle_of(CANVAS)
         .set(CARD, ui);
 
