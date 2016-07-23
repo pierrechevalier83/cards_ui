@@ -25,7 +25,7 @@ impl CardsUi {
     pub fn new(t: &'static str) -> CardsUi {
         CardsUi { title: t }
     }
-    pub fn run(self, mut app: CardsApp) {
+    pub fn run(self, mut app: &mut CardsApp) {
         use piston_window::{EventLoop, UpdateEvent};
 
         let mut window = window::setup(self.title);
@@ -43,21 +43,33 @@ impl CardsUi {
 
 use piston_window::PistonWindow;
 fn set_widgets(ui: &mut backend::UiCell, app: &mut CardsApp, window: &mut PistonWindow) {
-    use conrod::{Canvas, Colorable, Image, Positionable, Widget, color};
+    use conrod::*;//{Button, Canvas, Colorable, Image, Positionable, Widget, color};
     Canvas::new().color(color::LIGHT_BLUE).set(CANVAS, ui);
 
-    let card: Option<Card> = app.clone().last_card();
+    let card = app.last_card();
     let texture = match card {
         Some(card) => assets::card(window, card),
         None => assets::hidden_card(window),
     };
 
-    Image::from_texture(texture.clone())
+    Image::from_texture(texture)
         .middle_of(CANVAS)
         .set(CARD, ui);
+
+    Button::new()
+        .rgb(0.4, 0.75, 0.6)
+        .mid_left_of(CANVAS)
+        .react(|| {
+            let c = app.last_card();
+            println!("Card was: {}", c.unwrap());
+            println!("Button was pressed");
+            app.add_card(Card::new(Value::Queen, Suit::Hearts));
+        })
+        .set(BUTTON, ui);
 }
 
 widget_ids! {
     CANVAS,
+    BUTTON,
     CARD,
 }

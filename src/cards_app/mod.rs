@@ -11,11 +11,10 @@ impl CardsApp {
     pub fn new() -> CardsApp {
         CardsApp { card: None }
     }
-    pub fn add_card(mut self, card: Card) -> CardsApp {
+    pub fn add_card(&mut self, card: Card) {
         self.card = Some(card);
-        self
     }
-    pub fn last_card(self) -> Option<Card> {
+    pub fn last_card(&self) -> Option<Card> {
         self.card
     }
 }
