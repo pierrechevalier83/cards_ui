@@ -12,34 +12,29 @@ pub extern crate cards;
 mod backend;
 mod assets;
 mod window;
+mod cards_app;
 
 pub use cards::card::{Card, Value, Suit};
+pub use cards_app::CardsApp;
 
 pub struct CardsUi {
     // TODO: layout
     title: &'static str,
-    card: Option<Card>,
 }
 
 impl CardsUi {
     pub fn new(t: &'static str) -> CardsUi {
-        CardsUi {
-            title: t,
-            card: None,
-        }
+        CardsUi { title: t }
     }
-    pub fn add_card(mut self, card: Card) -> CardsUi {
-        self.card = Some(card);
-        self
-    }
-    pub fn run(self) {
+    pub fn run(self, app: CardsApp) {
         use conrod::{Canvas, Colorable, Image, Positionable, Widget, color};
         use piston_window::{EventLoop, UpdateEvent};
 
         let mut window = window::setup(self.title);
         let mut ui = assets::conrod_ui(&mut window);
-        let texture = match self.card {
-            Some(card) => assets::card(&mut window, self.card.unwrap()),
+        let card: Option<Card> = app.last_card();
+        let texture = match card {
+            Some(card) => assets::card(&mut window, card),
             None => assets::hidden_card(&mut window),
         };
 

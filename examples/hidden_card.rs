@@ -1,6 +1,7 @@
 extern crate cards_ui;
 
+use cards_ui::{CardsApp, CardsUi};
+
 fn main() {
-    let ui = cards_ui::CardsUi::new("Hidden Card");
-    ui.run();
+    CardsUi::new("Hidden card").run(CardsApp::new());
 }
