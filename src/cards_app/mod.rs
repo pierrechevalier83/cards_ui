@@ -1,12 +1,8 @@
 extern crate cards;
 
-use cards::card::{Card, Value, Suit};
+use cards::card::Card;
 
-pub enum Visibility {
-    visible,
-    hidden,
-}
-
+#[derive(Clone)]
 pub struct CardsApp {
     card: Option<Card>,
 }
@@ -18,12 +14,6 @@ impl CardsApp {
     pub fn add_card(mut self, card: Card) -> CardsApp {
         self.card = Some(card);
         self
-    }
-    pub fn visibility(self) -> Visibility {
-        match self.card {
-            Some(card) => Visibility::visible,
-            None => Visibility::hidden,
-        }
     }
     pub fn last_card(self) -> Option<Card> {
         self.card
