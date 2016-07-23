@@ -17,7 +17,6 @@ pub fn hidden_card(window: &mut PistonWindow) -> Arc<G2dTexture<'static>> {
 use cards::card::Card;
 pub fn card(window: &mut PistonWindow, card: Card) -> Arc<G2dTexture<'static>> {
     let path = asset_path(card);
-    println!("{}", path.clone().to_str().unwrap());
     let factory = &mut window.factory;
     let settings = TextureSettings::new();
     Arc::new(Texture::from_path(factory, &path, Flip::None, &settings).unwrap())

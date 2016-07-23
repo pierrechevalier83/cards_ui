@@ -1,10 +1,13 @@
 extern crate cards_ui;
 
-use cards_ui::{Card, CardsApp, CardsUi, Value, Suit};
+use cards_ui::{Card, CardsApp, CardsUi, Value, Suit, window};
 
 fn main() {
+    let mut window = window::setup("Three of clubs");
+
+    let mut app = CardsApp::new(&mut window);
     let three_of_club = Card::new(Value::Three, Suit::Clubs);
-    let mut app = CardsApp::new();
     app.add_card(three_of_club);
-    CardsUi::new("Three of clubs").run(&mut app);
+
+    CardsUi::new().run(&mut window, &mut app);
 }
