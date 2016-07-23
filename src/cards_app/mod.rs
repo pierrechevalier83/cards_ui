@@ -40,8 +40,14 @@ impl CardsApp {
     }
     pub fn card_texture(&self) -> Arc<G2dTexture<'static>> {
         match self.card {
-            Some(card) => self.card_textures[&card].clone(),
-            None => self.back_texture.clone(),
+            Some(card) => {
+                println!("{}", card);
+                self.card_textures[&card].clone()
+            }
+            None => {
+                println!("hidden");
+                self.back_texture.clone()
+            }
         }
     }
 }

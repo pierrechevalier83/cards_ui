@@ -33,15 +33,15 @@ impl CardsUi {
         // Poll events from the window.
         while let Some(event) = window.next() {
             ui.handle_event(event.clone());
-            window.draw_2d(&event, |c, g| ui.draw_if_changed(c, g));
             event.update(|_| ui.set_widgets(|mut ui| set_widgets(&mut ui, &mut app)));
+            window.draw_2d(&event, |c, g| ui.draw_if_changed(c, g));
         }
     }
 }
 
 use piston_window::PistonWindow;
 fn set_widgets(ui: &mut backend::UiCell, app: &mut CardsApp) {
-    use conrod::*;//{Button, Canvas, Colorable, Image, Positionable, Widget, color};
+    use conrod::{Button, Canvas, Colorable, Image, Positionable, Widget, color};
     Canvas::new().color(color::LIGHT_BLUE).set(CANVAS, ui);
 
     Image::from_texture(app.card_texture())
