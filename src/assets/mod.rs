@@ -3,31 +3,32 @@ extern crate conrod;
 extern crate find_folder;
 extern crate piston_window;
 
-use std::sync::Arc;
 use std::path::PathBuf;
 
 use piston_window::{Flip, G2dTexture, PistonWindow, Texture, TextureSettings};
-pub fn hidden_card(window: &mut PistonWindow) -> Arc<G2dTexture<'static>> {
+pub fn hidden_card(window: &mut PistonWindow) -> G2dTexture<'static> {
     let path = assets_folder().join("images/card-deck/Back Covers/Emerald.png");
     let factory = &mut window.factory;
     let settings = TextureSettings::new();
-    Arc::new(Texture::from_path(factory, &path, Flip::None, &settings).unwrap())
+    Texture::from_path(factory, &path, Flip::None, &settings).unwrap()
 }
 
 use cards::card::Card;
-pub fn card(window: &mut PistonWindow, card: Card) -> Arc<G2dTexture<'static>> {
+pub fn card(window: &mut PistonWindow, card: Card) -> G2dTexture<'static> {
     let path = asset_path(card);
     let factory = &mut window.factory;
     let settings = TextureSettings::new();
-    Arc::new(Texture::from_path(factory, &path, Flip::None, &settings).unwrap())
+    Texture::from_path(factory, &path, Flip::None, &settings).unwrap()
 }
 
 use super::backend;
-pub fn conrod_ui(window: &mut PistonWindow) -> backend::Ui {
-    let font_path = assets_folder().join("fonts/NotoSans/NotoSans-Regular.ttf");
-    let theme = conrod::Theme::default();
-    let glyph_cache = piston_window::Glyphs::new(&font_path, window.factory.clone()).unwrap();
-    backend::Ui::new(glyph_cache, theme)
+pub fn conrod_ui() -> backend::Ui {
+    backend::Ui::new(conrod::Theme::default())
+}
+
+pub fn text_texture_cache(window: &mut PistonWindow) -> conrod::backend::piston_window::GlyphCache {
+    // let font_path = assets_folder().join("fonts/NotoSans/NotoSans-Regular.ttf");
+    conrod::backend::piston_window::GlyphCache::new(window, 0, 0)
 }
 
 fn assets_folder() -> PathBuf {

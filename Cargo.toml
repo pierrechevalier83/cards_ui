@@ -4,8 +4,8 @@ version = "0.1.0"
 authors = ["Pierre Chevalier <pierrechevalier83@gmail.com>"]
 
 [dependencies]
-conrod = "0.37.*"
-find_folder = "*"
-piston_window = "*"
+conrod = { git = "https://github.com/mitchmindtree/conrod.git", rev = "2e4264d4" }
+find_folder = "0.3.0"
+piston_window = "0.51"
 [dependencies.cards]
 git = "https://github.com/th4t/cards-rs.git"
