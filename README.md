@@ -10,6 +10,15 @@ TODO
 * Layout (rows/columns)
 * Stacked deck
 
+Design
+------
+For the layout, here is my current vision:
+Matrix of Stacks
+Where a Stack is a collection of Cards + appearance(expanded or not, flipped or not)
+Each Card can be face up or face down and has a Value and a Suit
+
+Cards can then be moved between stacks (how exactly is to be investigated)
+
 Credits
 -------
 * UI framework: Conrod from the great PistonDevelopers
