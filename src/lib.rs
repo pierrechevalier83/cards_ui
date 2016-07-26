@@ -24,14 +24,14 @@ impl CardsUi {
     pub fn new() -> CardsUi {
         CardsUi {}
     }
-    pub fn run(self, mut window: &mut PistonWindow, mut app: &mut CardsApp) {
+    pub fn run(self, mut window: &mut PistonWindow, app: &mut CardsApp) {
         use piston_window::{EventLoop, UpdateEvent};
 
         let mut ui = assets::conrod_ui();
 
         let mut text_texture_cache = assets::text_texture_cache(&mut window);
 
-        let image_map = image_map! {
+        let mut image_map = image_map! {
             (CARD, app.card_texture(&mut window)),
         };
 
@@ -52,13 +52,17 @@ impl CardsUi {
                                                          texture_from_image);
                 }
             });
-            event.update(|_| ui.set_widgets(|mut ui| set_widgets(&mut ui, &mut app)));
+            event.update(|_| {
+                ui.set_widgets(|mut ui| set_widgets(&mut ui, &mut image_map, &mut window))
+            });
         }
     }
 }
 
 use piston_window::PistonWindow;
-fn set_widgets(ui: &mut backend::UiCell, app: &mut CardsApp) {
+fn set_widgets(ui: &mut backend::UiCell,
+               image_map: &mut conrod::image::Map<piston_window::G2dTexture<'static>>,
+               window: &mut piston_window::PistonWindow) {
     use conrod::{Button, Canvas, Colorable, Image, Positionable, Sizeable, Widget, color};
     Canvas::new().color(color::LIGHT_BLUE).set(CANVAS, ui);
 
@@ -70,13 +74,14 @@ fn set_widgets(ui: &mut backend::UiCell, app: &mut CardsApp) {
         .rgb(0.4, 0.75, 0.6)
         .mid_left_of(CANVAS)
         .react(|| {
-            app.add_card(Card::new(Value::Queen, Suit::Hearts));
+            println!("Pressed");
+            image_map.insert(CARD,assets::card(window, Card::new(Value::Queen, Suit::Hearts))); // NOTE: didn't retrigger!
         })
         .set(BUTTON, ui);
 }
 
 widget_ids! {
     CANVAS,
-    BUTTON,
     CARD,
+    BUTTON,
 }

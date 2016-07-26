@@ -3,10 +3,8 @@ extern crate cards;
 use assets;
 use cards::card::Card;
 // use cards::deck::Deck;
-use std::collections::HashMap;
 
 use piston_window::{G2dTexture, PistonWindow};
-type CardTextures = HashMap<Card, G2dTexture<'static>>;
 
 pub struct CardsApp {
     card: Option<Card>,
