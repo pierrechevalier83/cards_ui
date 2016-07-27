@@ -68,17 +68,18 @@ fn set_widgets(ui: &mut backend::UiCell,
                window: &mut piston_window::PistonWindow) {
     use conrod::{Button, Canvas, Colorable, Image, Positionable, Sizeable, Widget, color};
     Canvas::new().color(color::LIGHT_BLUE).set(CANVAS, ui);
-
+    use piston_window::ImageSize;
+    let (w, h) = image_map.get(CARD).unwrap().get_size();
     Image::new()
-        .w_h(255. as f64, 380. as f64) // TODO: get from somewhere instead of just knowing
+        .w_h(w as f64, h as f64)
         .middle_of(CANVAS)
         .set(CARD, ui);
     Button::new()
         .rgb(0.4, 0.75, 0.6)
         .mid_left_of(CANVAS)
         .react(|| {
-            println!("Pressed");
-            image_map.insert(CARD,assets::card(window, Card::new(Value::Queen, Suit::Hearts))); // NOTE: didn't retrigger!
+            image_map.insert(CARD,
+                             assets::card(window, Card::new(Value::Queen, Suit::Hearts)));
         })
         .set(BUTTON, ui);
 }
