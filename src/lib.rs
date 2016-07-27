@@ -38,7 +38,10 @@ impl CardsUi {
         window.set_ups(60);
         // Poll events from the window.
         while let Some(event) = window.next() {
-            ui.handle_event(event.clone());
+            // Convert the piston event to a conrod event.
+            if let Some(e) = conrod::backend::piston_window::convert_event(event.clone(), &window) {
+                ui.handle_event(e);
+            }
 
             window.draw_2d(&event, |c, g| {
                 if let Some(primitives) = ui.draw_if_changed(&image_map) {
