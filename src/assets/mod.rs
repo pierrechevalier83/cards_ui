@@ -13,6 +13,13 @@ pub fn hidden_card(window: &mut PistonWindow) -> G2dTexture<'static> {
     Texture::from_path(factory, &path, Flip::None, &settings).unwrap()
 }
 
+pub fn rust_logo(window: &mut PistonWindow) -> G2dTexture<'static> {
+    let path = assets_folder().join("images/rust.png");
+    let factory = &mut window.factory;
+    let settings = TextureSettings::new();
+    Texture::from_path(factory, &path, Flip::None, &settings).unwrap()
+}
+
 use cards::card::Card;
 pub fn card(window: &mut PistonWindow, card: Card) -> G2dTexture<'static> {
     let path = asset_path(card);

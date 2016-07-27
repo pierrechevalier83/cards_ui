@@ -1,9 +1,12 @@
 extern crate cards_ui;
 
-use cards_ui::{CardsApp, CardsUi, window};
+use cards_ui::{Card, CardsApp, CardsUi, Value, Suit, window};
 
 fn main() {
     let mut window = window::setup("Hidden card");
+
     let mut app = CardsApp::new();
+    let three_of_club = Card::new(Value::Three, Suit::Clubs);
+    app.add_card(three_of_club);
     CardsUi::new().run(&mut window, &mut app);
 }

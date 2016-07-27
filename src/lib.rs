@@ -28,11 +28,10 @@ impl CardsUi {
         use piston_window::{EventLoop, UpdateEvent};
 
         let mut ui = assets::conrod_ui();
-
         let mut text_texture_cache = assets::text_texture_cache(&mut window);
 
         let mut image_map = image_map! {
-            (CARD, app.card_texture(&mut window)),
+            (CARD, app.texture(&mut window)),
         };
 
         window.set_ups(60);
@@ -56,7 +55,7 @@ impl CardsUi {
                 }
             });
             event.update(|_| {
-                ui.set_widgets(|mut ui| set_widgets(&mut ui, &mut image_map, &mut window))
+                ui.set_widgets(|mut ui| set_widgets(&mut ui, &mut image_map, &mut window, app))
             });
         }
     }
@@ -65,7 +64,8 @@ impl CardsUi {
 use piston_window::PistonWindow;
 fn set_widgets(ui: &mut backend::UiCell,
                image_map: &mut conrod::image::Map<piston_window::G2dTexture<'static>>,
-               window: &mut piston_window::PistonWindow) {
+               window: &mut piston_window::PistonWindow,
+               app: &mut CardsApp) {
     use conrod::{Button, Canvas, Colorable, Image, Positionable, Sizeable, Widget, color};
     Canvas::new().color(color::LIGHT_BLUE).set(CANVAS, ui);
     use piston_window::ImageSize;
@@ -78,8 +78,8 @@ fn set_widgets(ui: &mut backend::UiCell,
         .rgb(0.4, 0.75, 0.6)
         .mid_left_of(CANVAS)
         .react(|| {
-            image_map.insert(CARD,
-                             assets::card(window, Card::new(Value::Queen, Suit::Hearts)));
+            app.flip();
+            image_map.insert(CARD, app.texture(window));
         })
         .set(BUTTON, ui);
 }

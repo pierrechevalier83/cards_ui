@@ -8,6 +8,6 @@ fn main() {
     let mut app = CardsApp::new();
     let three_of_club = Card::new(Value::Three, Suit::Clubs);
     app.add_card(three_of_club);
-
+    app.flip();
     CardsUi::new().run(&mut window, &mut app);
 }
