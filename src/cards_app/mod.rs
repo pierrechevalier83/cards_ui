@@ -22,14 +22,8 @@ impl CardsApp {
     }
     pub fn card_texture(&self, window: &mut PistonWindow) -> G2dTexture<'static> {
         match self.card {
-            Some(card) => {
-                println!("{}", card);
-                assets::card(window, card)
-            }
-            None => {
-                println!("hidden");
-                assets::hidden_card(window)
-            }
+            Some(card) => assets::card(window, card),
+            None => assets::hidden_card(window),
         }
     }
 }
