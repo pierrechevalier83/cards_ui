@@ -34,6 +34,10 @@ impl CardsUi {
         self.app.add_card(card);
         self
     }
+    pub fn add_deck(&mut self) -> &mut CardsUi {
+        self.app.add_deck();
+        self
+    }
     pub fn flip(&mut self) -> &mut CardsUi {
         self.app.flip();
         self

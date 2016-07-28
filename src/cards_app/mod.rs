@@ -2,7 +2,7 @@ extern crate cards;
 
 use assets;
 use cards::card::Card;
-// use cards::deck::Deck;
+use cards::deck::Deck;
 
 use piston_window::{G2dTexture, PistonWindow};
 
@@ -52,6 +52,9 @@ impl StackOfCards {
     fn push(&mut self, card: Card) {
         self.stack.push(SingleCard::new(card));
     }
+    fn push_cards(&mut self, cards: Vec<Card>) {
+        self.stack = cards.into_iter().map(|card| SingleCard::new(card)).collect();
+    }
     fn last(&self) -> Option<Card> {
         match self.stack.last() {
             Some(last) => Some(last.card),
@@ -84,6 +87,9 @@ pub struct CardsApp {
 impl CardsApp {
     pub fn new() -> CardsApp {
         CardsApp { stack: StackOfCards::new() }
+    }
+    pub fn add_deck(&mut self) {
+        self.stack.push_cards(Deck::new_unshuffled().draw_n(52).ok().unwrap());
     }
     pub fn add_card(&mut self, card: Card) {
         self.stack.push(card);
