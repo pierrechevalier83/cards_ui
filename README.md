@@ -5,10 +5,11 @@ A card game UI library written in Rust.
 
 TODO
 ----
-* Flip card (depends on https://github.com/PistonDevelopers/conrod/issues/725)
+* Switch back to mainline conrod (depends on https://github.com/PistonDevelopers/conrod/issues/725)
+* Stacked deck
 * Card picker
 * Layout (rows/columns)
-* Stacked deck
+
 
 Design
 ------
