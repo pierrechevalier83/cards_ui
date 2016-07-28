@@ -7,7 +7,7 @@ use std::path::PathBuf;
 
 use piston_window::{Flip, G2dTexture, PistonWindow, Texture, TextureSettings};
 pub fn hidden_card(window: &mut PistonWindow) -> G2dTexture<'static> {
-    let path = assets_folder().join("images/card-deck/Back Covers/Emerald.png");
+    let path = assets_folder().join("images/card-deck/Back Covers/Emerald_rust.png");
     let factory = &mut window.factory;
     let settings = TextureSettings::new();
     Texture::from_path(factory, &path, Flip::None, &settings).unwrap()
