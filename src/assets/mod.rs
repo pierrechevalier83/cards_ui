@@ -30,12 +30,17 @@ pub fn card(window: &mut PistonWindow, card: Card) -> G2dTexture<'static> {
 
 use super::backend;
 pub fn conrod_ui() -> backend::Ui {
-    backend::Ui::new(conrod::Theme::default())
+    let mut ui = backend::Ui::new(conrod::Theme::default());
+    let font_path = assets_folder().join("fonts/NotoSans/NotoSans-Regular.ttf");
+    ui.fonts.insert_from_file(font_path).unwrap();
+    ui
 }
 
+
 pub fn text_texture_cache(window: &mut PistonWindow) -> conrod::backend::piston_window::GlyphCache {
-    // let font_path = assets_folder().join("fonts/NotoSans/NotoSans-Regular.ttf");
-    conrod::backend::piston_window::GlyphCache::new(window, 0, 0)
+    use piston_window::Window;
+    let size = window.size();
+    conrod::backend::piston_window::GlyphCache::new(window, size.width, size.height)
 }
 
 fn assets_folder() -> PathBuf {

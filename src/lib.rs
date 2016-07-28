@@ -76,7 +76,8 @@ impl CardsUi {
     fn set_widgets(&mut self,
                    ui: &mut backend::UiCell,
                    image_map: &mut conrod::image::Map<piston_window::G2dTexture<'static>>) {
-        use conrod::{Button, Canvas, Colorable, Image, Positionable, Sizeable, Widget, color};
+        use conrod::{Button, Canvas, Colorable, Image, Labelable, Positionable, Sizeable, Widget,
+                     color};
         Canvas::new().color(color::LIGHT_BLUE).set(CANVAS, ui);
         use piston_window::ImageSize;
         let (w, h) = image_map.get(CARD).unwrap().get_size();
@@ -86,12 +87,22 @@ impl CardsUi {
             .set(CARD, ui);
         Button::new()
             .rgb(0.4, 0.75, 0.6)
+            .label("Pop")
             .mid_left_of(CANVAS)
+            .react(|| {
+                self.app.pop();
+                image_map.insert(CARD, self.app.texture(&mut self.window));
+            })
+            .set(POP_BUTTON, ui);
+        Button::new()
+            .rgb(0.4, 0.75, 0.6)
+            .label("Flip")
+            .mid_right_of(CANVAS)
             .react(|| {
                 self.app.flip();
                 image_map.insert(CARD, self.app.texture(&mut self.window));
             })
-            .set(BUTTON, ui);
+            .set(FLIP_BUTTON, ui);
     }
 }
 
@@ -99,5 +110,6 @@ impl CardsUi {
 widget_ids! {
     CANVAS,
     CARD,
-    BUTTON,
+    POP_BUTTON,
+    FLIP_BUTTON,
 }

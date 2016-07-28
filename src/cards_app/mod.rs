@@ -58,6 +58,12 @@ impl StackOfCards {
             None => None,
         }
     }
+    fn pop(&mut self) -> Option<Card> {
+        match self.stack.pop() {
+            Some(last) => Some(last.card),
+            None => None,
+        }
+    }
     fn visible(&self) -> Option<VisibleFace> {
         match self.stack.last() {
             Some(last) => Some(last.visible.clone()),
@@ -84,6 +90,9 @@ impl CardsApp {
     }
     pub fn last_card(&self) -> Option<Card> {
         self.stack.last()
+    }
+    pub fn pop(&mut self) -> Option<Card> {
+        self.stack.pop()
     }
     pub fn flip(&mut self) {
         self.stack.flip();
