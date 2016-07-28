@@ -11,11 +11,12 @@ pub extern crate cards;
 
 mod backend;
 mod assets;
-pub mod window;
+mod window;
 mod cards_app;
 
 pub use cards::card::{Card, Value, Suit};
-pub use cards_app::CardsApp;
+use cards_app::CardsApp;
+use piston_window::PistonWindow;
 
 pub struct CardsUi {
     app: CardsApp,
@@ -69,37 +70,31 @@ impl CardsUi {
                          texture_from_image);
                 }
             });
-            event.update(|_| {
-                ui.set_widgets(|mut ui| {
-                    set_widgets(&mut ui, &mut image_map, &mut self.window, &mut self.app)
-                })
-            });
+            event.update(|_| ui.set_widgets(|mut ui| self.set_widgets(&mut ui, &mut image_map)));
         }
+    }
+    fn set_widgets(&mut self,
+                   ui: &mut backend::UiCell,
+                   image_map: &mut conrod::image::Map<piston_window::G2dTexture<'static>>) {
+        use conrod::{Button, Canvas, Colorable, Image, Positionable, Sizeable, Widget, color};
+        Canvas::new().color(color::LIGHT_BLUE).set(CANVAS, ui);
+        use piston_window::ImageSize;
+        let (w, h) = image_map.get(CARD).unwrap().get_size();
+        Image::new()
+            .w_h(w as f64, h as f64)
+            .middle_of(CANVAS)
+            .set(CARD, ui);
+        Button::new()
+            .rgb(0.4, 0.75, 0.6)
+            .mid_left_of(CANVAS)
+            .react(|| {
+                self.app.flip();
+                image_map.insert(CARD, self.app.texture(&mut self.window));
+            })
+            .set(BUTTON, ui);
     }
 }
 
-use piston_window::PistonWindow;
-fn set_widgets(ui: &mut backend::UiCell,
-               image_map: &mut conrod::image::Map<piston_window::G2dTexture<'static>>,
-               window: &mut piston_window::PistonWindow,
-               app: &mut CardsApp) {
-    use conrod::{Button, Canvas, Colorable, Image, Positionable, Sizeable, Widget, color};
-    Canvas::new().color(color::LIGHT_BLUE).set(CANVAS, ui);
-    use piston_window::ImageSize;
-    let (w, h) = image_map.get(CARD).unwrap().get_size();
-    Image::new()
-        .w_h(w as f64, h as f64)
-        .middle_of(CANVAS)
-        .set(CARD, ui);
-    Button::new()
-        .rgb(0.4, 0.75, 0.6)
-        .mid_left_of(CANVAS)
-        .react(|| {
-            app.flip();
-            image_map.insert(CARD, app.texture(window));
-        })
-        .set(BUTTON, ui);
-}
 
 widget_ids! {
     CANVAS,
