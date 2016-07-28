@@ -18,20 +18,29 @@ pub use cards::card::{Card, Value, Suit};
 pub use cards_app::CardsApp;
 
 pub struct CardsUi {
+    app: CardsApp,
 }
 
 impl CardsUi {
     pub fn new() -> CardsUi {
-        CardsUi {}
+        CardsUi { app: CardsApp::new() }
     }
-    pub fn run(self, mut window: &mut PistonWindow, app: &mut CardsApp) {
+    pub fn add_card(&mut self, card: Card) -> &mut CardsUi {
+        self.app.add_card(card);
+        self
+    }
+    pub fn flip(&mut self) -> &mut CardsUi {
+        self.app.flip();
+        self
+    }
+    pub fn run(&mut self, mut window: &mut PistonWindow) {
         use piston_window::{EventLoop, UpdateEvent};
 
         let mut ui = assets::conrod_ui();
         let mut text_texture_cache = assets::text_texture_cache(&mut window);
 
         let mut image_map = image_map! {
-            (CARD, app.texture(&mut window)),
+            (CARD, self.app.texture(&mut window)),
         };
 
         window.set_ups(60);
@@ -47,15 +56,18 @@ impl CardsUi {
                     fn texture_from_image<T>(img: &T) -> &T {
                         img
                     };
-                    conrod::backend::piston_window::draw(c,
-                                                         g,
-                                                         primitives,
-                                                         &mut text_texture_cache,
-                                                         texture_from_image);
+                    use conrod::backend::piston_window::draw;
+                    draw(c,
+                         g,
+                         primitives,
+                         &mut text_texture_cache,
+                         texture_from_image);
                 }
             });
             event.update(|_| {
-                ui.set_widgets(|mut ui| set_widgets(&mut ui, &mut image_map, &mut window, app))
+                ui.set_widgets(|mut ui| {
+                    set_widgets(&mut ui, &mut image_map, &mut window, &mut self.app)
+                })
             });
         }
     }
