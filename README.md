@@ -6,6 +6,7 @@ A card game UI library written in Rust.
 TODO
 ----
 * Switch back to mainline conrod (depends on https://github.com/PistonDevelopers/conrod/issues/725)
+* Button with texture widget for cards (that I can click to flip/ drag and drop to move)
 * Stacked deck
 * Card picker
 * Layout (rows/columns)
