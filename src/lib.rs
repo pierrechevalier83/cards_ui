@@ -19,11 +19,15 @@ pub use cards_app::CardsApp;
 
 pub struct CardsUi {
     app: CardsApp,
+    window: PistonWindow,
 }
 
 impl CardsUi {
-    pub fn new() -> CardsUi {
-        CardsUi { app: CardsApp::new() }
+    pub fn new(title: &'static str) -> CardsUi {
+        CardsUi {
+            app: CardsApp::new(),
+            window: window::setup(title),
+        }
     }
     pub fn add_card(&mut self, card: Card) -> &mut CardsUi {
         self.app.add_card(card);
@@ -33,25 +37,26 @@ impl CardsUi {
         self.app.flip();
         self
     }
-    pub fn run(&mut self, mut window: &mut PistonWindow) {
+    pub fn run(&mut self) {
         use piston_window::{EventLoop, UpdateEvent};
 
         let mut ui = assets::conrod_ui();
-        let mut text_texture_cache = assets::text_texture_cache(&mut window);
+        let mut text_texture_cache = assets::text_texture_cache(&mut self.window);
 
         let mut image_map = image_map! {
-            (CARD, self.app.texture(&mut window)),
+            (CARD, self.app.texture(&mut self.window)),
         };
 
-        window.set_ups(60);
+        self.window.set_ups(60);
         // Poll events from the window.
-        while let Some(event) = window.next() {
+        while let Some(event) = self.window.next() {
             // Convert the piston event to a conrod event.
-            if let Some(e) = conrod::backend::piston_window::convert_event(event.clone(), &window) {
+            if let Some(e) = conrod::backend::piston_window::convert_event(event.clone(),
+                                                                           &self.window) {
                 ui.handle_event(e);
             }
 
-            window.draw_2d(&event, |c, g| {
+            self.window.draw_2d(&event, |c, g| {
                 if let Some(primitives) = ui.draw_if_changed(&image_map) {
                     fn texture_from_image<T>(img: &T) -> &T {
                         img
@@ -66,7 +71,7 @@ impl CardsUi {
             });
             event.update(|_| {
                 ui.set_widgets(|mut ui| {
-                    set_widgets(&mut ui, &mut image_map, &mut window, &mut self.app)
+                    set_widgets(&mut ui, &mut image_map, &mut self.window, &mut self.app)
                 })
             });
         }
