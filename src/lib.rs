@@ -110,7 +110,6 @@ impl CardsUi {
     }
 }
 
-
 widget_ids! {
     CANVAS,
     CARD,
