@@ -30,7 +30,7 @@ pub fn card(window: &mut PistonWindow, card: Card) -> G2dTexture<'static> {
 
 use super::backend;
 pub fn conrod_ui() -> backend::Ui {
-    let mut ui = backend::Ui::new(conrod::Theme::default());
+    let mut ui = backend::UiBuilder::new().build();
     let font_path = assets_folder().join("fonts/NotoSans/NotoSans-Regular.ttf");
     ui.fonts.insert_from_file(font_path).unwrap();
     ui

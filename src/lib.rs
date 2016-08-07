@@ -62,7 +62,7 @@ impl CardsUi {
             }
 
             self.window.draw_2d(&event, |c, g| {
-                if let Some(primitives) = ui.draw_if_changed(&image_map) {
+                if let Some(primitives) = ui.draw_if_changed() {
                     fn texture_from_image<T>(img: &T) -> &T {
                         img
                     };
@@ -71,6 +71,7 @@ impl CardsUi {
                          g,
                          primitives,
                          &mut text_texture_cache,
+						 &image_map,
                          texture_from_image);
                 }
             });
