@@ -5,7 +5,7 @@ A card game UI library written in Rust.
 
 TODO
 ----
-* Button with texture widget for cards (that I can click to flip/ drag and drop to move)
+* Drag and drop card
 * Stacked deck
 * Card picker
 * Layout (rows/columns)
