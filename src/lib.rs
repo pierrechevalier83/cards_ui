@@ -81,9 +81,9 @@ impl CardsUi {
     fn set_widgets(&mut self,
                    ui: &mut backend::UiCell,
                    image_map: &mut conrod::image::Map<piston_window::G2dTexture<'static>>) {
-        use conrod::{Button, Canvas, Colorable, Image, Labelable, Positionable, Sizeable, Widget,
-                     color};
-        Canvas::new().color(color::LIGHT_BLUE).set(CANVAS, ui);
+        use conrod::{Colorable, Labelable, Positionable, Sizeable, Widget, color};
+        use conrod::widget::{Canvas, Image, Button};
+		Canvas::new().color(color::LIGHT_BLUE).set(CANVAS, ui);
         use piston_window::ImageSize;
         let (w, h) = image_map.get(CARD).unwrap().get_size();
         Image::new()

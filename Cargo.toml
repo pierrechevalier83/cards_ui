@@ -4,7 +4,7 @@ version = "0.1.1"
 authors = ["Pierre Chevalier <pierrechevalier83@gmail.com>"]
 
 [dependencies]
-conrod = "0.39"
+conrod = { git = "https://github.com/pierrechevalier83/conrod.git", branch = "images_on_buttons_171" }
 find_folder = "0.3.0"
 piston_window = "0.51"
 [dependencies.cards]
