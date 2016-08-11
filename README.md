@@ -3,6 +3,12 @@ Cards UI (WIP)
 
 A card game UI library written in Rust.
 
+Getting started
+---------------
+Running the following example, you should get the gist of it:
+cargo run --release --example deck
+
+
 TODO
 ----
 * Drag and drop card
