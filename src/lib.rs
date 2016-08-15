@@ -75,7 +75,10 @@ impl CardsUi {
                          texture_from_image);
                 }
             });
-            event.update(|_| ui.set_widgets(|mut ui| self.set_widgets(&mut ui, &mut image_map)));
+            event.update(|_| {
+			    let mut ui = ui.set_widgets();
+			    self.set_widgets(&mut ui, &mut image_map);
+			});
         }
     }
     fn set_widgets(&mut self,
@@ -87,27 +90,27 @@ impl CardsUi {
         Canvas::new().color(color::LIGHT_BLUE).set(CANVAS, ui);
         use piston_window::ImageSize;
         let (w, h) = image_map.get(CARD).unwrap().get_size();
-        Button::new()
+        if Button::new()
             .w_h(w as f64, h as f64)
             .rgb(0.4, 0.75, 0.6)
             .label("Pop")
             .mid_left_of(CANVAS)
-            .react(|| {
+            .set(POP_BUTTON, ui)
+			.was_clicked() {
                 self.app.pop();
                 image_map.insert(CARD, self.app.texture(&mut self.window));
-            })
-            .set(POP_BUTTON, ui);
-        Button::new()
+			};
+        if Button::new()
             .w_h(w as f64, h as f64)
             .color(color::LIGHT_BLUE)
             .border_color(color::LIGHT_BLUE)
             .middle_of(CANVAS)
             .image(CARD)
-            .react(|| {
+            .set(FLIP_BUTTON, ui)
+			.was_clicked() {
                 self.app.flip();
                 image_map.insert(CARD, self.app.texture(&mut self.window));
-            })
-            .set(FLIP_BUTTON, ui);
+			};
     }
 }
 
