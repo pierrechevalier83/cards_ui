@@ -99,12 +99,11 @@ impl CardsUi {
             self.app.pop();
             image_map.insert(CARD, self.app.texture(&mut self.window));
         };
-        if Button::new()
+        if Button::image(CARD)
             .w_h(w as f64, h as f64)
             .color(color::LIGHT_BLUE)
             .border_color(color::LIGHT_BLUE)
             .middle_of(CANVAS)
-            .image(CARD)
             .set(FLIP_BUTTON, ui)
             .was_clicked() {
             self.app.flip();
