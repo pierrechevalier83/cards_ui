@@ -44,7 +44,7 @@ impl CardsUi {
     }
     pub fn run(&mut self) {
         use piston_window::{EventLoop, UpdateEvent};
-
+        let mut updated = true;
         let mut ui = assets::conrod_ui();
         let mut text_texture_cache = assets::text_texture_cache(&mut self.window);
 
@@ -73,42 +73,49 @@ impl CardsUi {
                          &mut text_texture_cache,
                          &image_map,
                          texture_from_image);
+                    println!("Drawing");
+                } else {
+                    print!(".");
                 }
             });
             event.update(|_| {
+                if updated {
+                    ui.needs_redraw();
+                    updated = false;
+                }
                 let mut ui = ui.set_widgets();
                 self.set_widgets(&mut ui, &mut image_map);
+                for _ in ui.widget_input(FLIP_BUTTON).clicks().right() {
+                    println!("right click");
+                    self.app.pop();
+                    image_map.insert(CARD, self.app.texture(&mut self.window));
+                    updated = true;
+                }
+                for _ in ui.widget_input(FLIP_BUTTON).clicks().left() {
+                    println!("left click");
+                    self.app.flip();
+                    image_map.insert(CARD, self.app.texture(&mut self.window));
+                    updated = true;
+                }
             });
         }
     }
     fn set_widgets(&mut self,
                    ui: &mut backend::UiCell,
                    image_map: &mut conrod::image::Map<piston_window::G2dTexture<'static>>) {
-        use conrod::{Borderable, Colorable, Labelable, Positionable, Sizeable, Widget, color};
+        use conrod::{Borderable, Colorable, Positionable, Sizeable, Widget, color};
         use conrod::widget::{Canvas, Button};
         Canvas::new().color(color::LIGHT_BLUE).set(CANVAS, ui);
         use piston_window::ImageSize;
         let (w, h) = image_map.get(CARD).unwrap().get_size();
-        if Button::new()
-            .w_h(w as f64, h as f64)
-            .rgb(0.4, 0.75, 0.6)
-            .label("Pop")
-            .mid_left_of(CANVAS)
-            .set(POP_BUTTON, ui)
-            .was_clicked() {
-            self.app.pop();
-            image_map.insert(CARD, self.app.texture(&mut self.window));
-        };
-        if Button::image(CARD)
+        let card_face = Button::image(CARD)
             .w_h(w as f64, h as f64)
             .color(color::LIGHT_BLUE)
             .border_color(color::LIGHT_BLUE)
-            .middle_of(CANVAS)
-            .set(FLIP_BUTTON, ui)
-            .was_clicked() {
-            self.app.flip();
-            image_map.insert(CARD, self.app.texture(&mut self.window));
-        };
+            .middle_of(CANVAS);
+
+
+        card_face.set(FLIP_BUTTON, ui);
     }
 }
 
